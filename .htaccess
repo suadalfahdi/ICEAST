@@ -1,0 +1,100 @@
+# ICEAST 2027 - Apache configuration.
+# dev/build.py copies this file to the root of the production folder.
+#
+# REQUIREMENT: the site's <Directory> block must allow these overrides, e.g.
+#     AllowOverride All
+# (or at least: AuthConfig FileInfo Indexes Limit Options). With a narrower
+# AllowOverride, Apache answers every request with HTTP 500.
+# Modules used: mod_headers (required), mod_deflate/mod_brotli (optional but
+# strongly recommended). Server-level extras that cannot be set here:
+# "ServerTokens Prod" and "TraceEnable Off" in httpd.conf.
+#
+# The site sits behind an F5 BIG-IP WAF and is served over HTTP and/or
+# HTTPS, so there is no HTTPS redirect and no HSTS header here. When it
+# becomes HTTPS-only, do the redirect and HSTS on the BIG-IP (LTM policy or
+# iRule), or enable the commented "HTTPS only" block below.
+
+# ---- Security headers (sent with every response, including errors) --------
+# Content-Security-Policy: the site itself needs only script-src 'self'
+# (no inline scripts anywhere). The F5 BIG-IP in front of it injects
+# obfuscated INLINE JavaScript (bot defense / client-side integrity checks)
+# into HTML responses and calls back to same-origin /TSPD/ URLs, so the
+# active policy also allows 'unsafe-inline' 'unsafe-eval' in script-src and
+# adds connect-src 'self', per the F5 guidance for injected JavaScript.
+# Everything else stays locked down. If JavaScript injection is disabled on
+# the F5 for this virtual server, swap in the strict line below.
+<IfModule mod_headers.c>
+  Header always set Content-Security-Policy "default-src 'none'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'self'; frame-src https://www.google.com; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
+  # Strict variant (use when the WAF does not inject JavaScript):
+  # Header always set Content-Security-Policy "default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; frame-src https://www.google.com; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "DENY"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()"
+  Header always set Cross-Origin-Opener-Policy "same-origin"
+  Header always set Cross-Origin-Resource-Policy "same-origin"
+  Header always set X-Permitted-Cross-Domain-Policies "none"
+  Header unset X-Powered-By
+</IfModule>
+
+# ---- HTTPS only (DISABLED - site runs on HTTP and/or HTTPS) ----------------
+# To go HTTPS-only later, uncomment this block. It redirects plain-HTTP
+# requests (loop-free behind a proxy that sets X-Forwarded-Proto) and adds
+# HSTS so browsers keep using HTTPS. NOTE: a BIG-IP does not insert
+# X-Forwarded-Proto by default; it needs an iRule or Local Traffic Policy,
+# otherwise this block loops when the F5 talks plain HTTP to Apache.
+#<IfModule mod_rewrite.c>
+#  RewriteEngine On
+#  RewriteCond %{HTTPS} !=on
+#  RewriteCond %{HTTP:X-Forwarded-Proto} !=https
+#  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+#</IfModule>
+#<IfModule mod_headers.c>
+#  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+#</IfModule>
+
+# ---- MIME types + charset --------------------------------------------------
+AddType font/woff        .woff
+AddType font/woff2       .woff2
+AddType image/webp       .webp
+AddType text/calendar    .ics
+AddType text/javascript  .js
+AddDefaultCharset UTF-8
+
+# ---- Compression (text assets only; fonts and images are pre-compressed) ---
+<IfModule mod_brotli.c>
+  AddOutputFilterByType BROTLI_COMPRESS text/html text/plain text/css text/javascript application/javascript application/json application/xml text/xml image/svg+xml text/calendar
+</IfModule>
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css text/javascript application/javascript application/json application/xml text/xml image/svg+xml text/calendar
+</IfModule>
+
+# ---- Caching ---------------------------------------------------------------
+# Fonts never change without a filename change; pages are revalidated hourly.
+<IfModule mod_headers.c>
+  <FilesMatch "\.(woff2?)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.(png|webp|jpe?g|svg|ico)$">
+    Header set Cache-Control "public, max-age=2592000"
+  </FilesMatch>
+  <FilesMatch "\.(css|js)$">
+    Header set Cache-Control "public, max-age=86400"
+  </FilesMatch>
+  <FilesMatch "\.(html|ics|xml|txt)$">
+    Header set Cache-Control "public, max-age=3600, must-revalidate"
+  </FilesMatch>
+</IfModule>
+
+# ---- Hardening -------------------------------------------------------------
+Options -Indexes -MultiViews
+ServerSignature Off
+DirectoryIndex index.html
+ErrorDocument 404 /404.html
+ErrorDocument 403 /404.html
+
+# Never serve dotfiles, editor backups, or tooling files if they slip in.
+# (.well-known/ is a directory, not a file - it stays reachable.)
+<FilesMatch "(^\.|\.(bak|orig|old|tmp|swp|log|sql|py|yml|yaml|md|sh|ini|conf|config|env)$)">
+  Require all denied
+</FilesMatch>

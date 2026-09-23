@@ -1,0 +1,5 @@
+# Security contact for the ICEAST 2027 conference website (RFC 9116)
+Contact: mailto:iceast@mtc.edu.om
+Expires: 2027-09-01T00:00:00Z
+Preferred-Languages: en, ar
+Canonical: https://iceast.mtc.edu.om/.well-known/security.txt

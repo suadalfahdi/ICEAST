@@ -1,0 +1,24 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Military Technological College//ICEAST 2027//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:iceast-2027@iceast.mtc.edu.om
+DTSTAMP:20260902T000000Z
+DTSTART;VALUE=DATE:20271031
+DTEND;VALUE=DATE:20271105
+SUMMARY:ICEAST 2027 - International Conference on Engineering Advancemen
+ ts\, Science and Technology
+DESCRIPTION:ICEAST 2027\, the International Conference on Engineering Ad
+ vancements\, Science and Technology\, hosted by the Military Technologi
+ cal College\, Muscat\, Sultanate of Oman. Five specialised conferences 
+ run in parallel: ICSETS\, ICASET\, ICMET\, ICSBC and ICSELL. Details: h
+ ttps://iceast.mtc.edu.om/
+LOCATION:Military Technological College\, Al Matar Street\, Muscat\, Sul
+ tanate of Oman
+URL:https://iceast.mtc.edu.om/
+STATUS:CONFIRMED
+TRANSP:TRANSPARENT
+END:VEVENT
+END:VCALENDAR
