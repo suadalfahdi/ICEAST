@@ -28,6 +28,10 @@ const CONFERENCE = Object.freeze({
 
   /* --- Contact -------------------------------------------------- */
   email:       "iceast@mtc.edu.om",
+  /* Shown in the top bar and the floating quick links. Leave empty ("")
+     to hide the phone item everywhere. International format, e.g.
+     "+968 2400 0000". */
+  phone:       "+968-22091111",  /* TEMPORARY number (2026-09-24), to be replaced */
 
   /* --- Location (drives the venue-page map widget) --------------
      mapQuery is the place searched on Google Maps when a visitor
