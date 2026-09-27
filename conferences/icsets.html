@@ -36,6 +36,17 @@
 <body class="theme-red">
 <a class="skip-link" href="#main">Skip to content</a>
 <div class="accent-band"><span class="r"></span><span class="c"></span><span class="n"></span></div>
+<div class="utility-bar"><div class="wrap">
+  <ul class="ub-info" aria-label="Conference details">
+    <li><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M8 3v4M16 3v4"/></svg><span class="ub-long" data-conf="datesLong">31 October – 4 November 2027</span><span class="ub-short" data-conf="datesShort">31 Oct – 4 Nov 2027</span></li>
+    <li class="ub-venue"><a href="../venue.html#location"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span>Military Technological College, Muscat</span></a></li>
+  </ul>
+  <ul class="ub-contact" aria-label="Contact">
+    <li data-qc-phone hidden><a href="#" data-qc-tel aria-label="Call the conference office"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.6 3.5 9 3l1.6 4-2 1.3a11 11 0 0 0 5.1 5.1l1.3-2 4 1.6-.5 2.4a2 2 0 0 1-2 1.6A15 15 0 0 1 5 5.5a2 2 0 0 1 1.6-2z"/></svg><span class="ub-text" data-conf="phone"></span></a></li>
+    <li><a href="mailto:iceast@mtc.edu.om" data-qc-mail aria-label="Email iceast@mtc.edu.om"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/></svg><span class="ub-text" data-conf="email">iceast@mtc.edu.om</span></a></li>
+    <li class="ub-cta-item"><a class="ub-cta" href="../call-for-papers.html">Call for Papers</a></li>
+  </ul>
+</div></div>
 <header class="site-header"><div class="wrap">
   <a class="brand" href="../index.html">
     <img src="../images/logo-mtc.png" alt="Military Technological College crest" width="52" height="52">
@@ -77,11 +88,87 @@
     <div class="section-head">
       <p class="eyebrow"><span class="dots"><i class="r"></i><i class="c"></i><i class="n"></i></span> Programme Structure</p>
       <h2>Conference Tracks</h2>
+      <p class="tracks-meta">5 main tracks &middot; 52 sub-track topics</p>
     </div>
-    <div class="placeholder">
-      <span class="badge">Coming Soon</span>
-      <h3>To Be Announced</h3>
-      <p>The ICSETS 2027 tracks and topic areas will be published here.</p>
+    <div class="tracks" data-tracks>
+      <div class="tracks-tools"><button type="button" data-tracks-expand hidden>Expand all</button></div>
+      <details class="track" id="track-1" open>
+        <summary><span class="track-num">01</span><span class="track-title">Intelligent Systems, Artificial Intelligence &amp; Automation</span><span class="track-count">10 topics</span><span class="track-icon" aria-hidden="true"></span></summary>
+        <ul class="track-topics">
+          <li>Artificial Intelligence and Machine Learning</li>
+          <li>Fuzzy Systems and Neural Networks</li>
+          <li>Computer Vision and Image Processing</li>
+          <li>Natural Language Processing and Generative AI</li>
+          <li>Unmanned and Autonomous Vehicles (UAV)</li>
+          <li>Control Systems, Robotics, Autonomous Systems</li>
+          <li>Multi-Agent and Swarm Systems</li>
+          <li>Industrial Automation and Smart Control</li>
+          <li>Human-Computer Interaction (HCI)</li>
+          <li>AI Applications in Defence, Healthcare, and Industry</li>
+        </ul>
+      </details>
+      <details class="track" id="track-2">
+        <summary><span class="track-num">02</span><span class="track-title">Electronics, Communications &amp; Embedded Technologies</span><span class="track-count">13 topics</span><span class="track-icon" aria-hidden="true"></span></summary>
+        <ul class="track-topics">
+          <li>Analog and Digital Electronics</li>
+          <li>VLSI Circuits and Semiconductor Technology</li>
+          <li>FPGA and Embedded Systems Design</li>
+          <li>Internet of Things (IoT) and wireless sensor network (WSN)</li>
+          <li>Networking, 5G, and Emerging Communication Technologies</li>
+          <li>RF and Microwave Circuits and Antennas design</li>
+          <li>Remote Sensing, Image Processing, and Photonics</li>
+          <li>Signal Processing and Communication Networks</li>
+          <li>Sensor Technologies and Smart Instrumentation</li>
+          <li>Defence electronics and military applications</li>
+          <li>Biomedical Engineering and Health Science Applications</li>
+          <li>Laser, Photonics, and Advanced Ordnance Technologies</li>
+          <li>Nanoscale Technologies for Medical Devices, Diagnostics, and Wearable Health Technologies</li>
+        </ul>
+      </details>
+      <details class="track" id="track-3">
+        <summary><span class="track-num">03</span><span class="track-title">Sustainable Energy Systems &amp; Green Engineering</span><span class="track-count">8 topics</span><span class="track-icon" aria-hidden="true"></span></summary>
+        <ul class="track-topics">
+          <li>Solar Energy Systems and Photovoltaics</li>
+          <li>Wind and Renewable Energy Technologies</li>
+          <li>Smart Grids and Energy Management</li>
+          <li>Energy Storage Technologies</li>
+          <li>Hydrogen and Fuel Cell Technologies</li>
+          <li>Power Electronics for Sustainable Energy</li>
+          <li>Electrification and Green Transportation</li>
+          <li>Nanotechnology for Sustainability and Environmental Engineering</li>
+        </ul>
+      </details>
+      <details class="track" id="track-4">
+        <summary><span class="track-num">04</span><span class="track-title">Cybersecurity, Digital Transformation &amp; Advanced Technologies</span><span class="track-count">11 topics</span><span class="track-icon" aria-hidden="true"></span></summary>
+        <ul class="track-topics">
+          <li>Cybersecurity and Information Assurance</li>
+          <li>Critical Infrastructure Protection</li>
+          <li>Industrial Control Systems (ICS) Security</li>
+          <li>Cloud and Edge Security</li>
+          <li>Digital Transformation Strategies</li>
+          <li>Digital Twins and Smart Infrastructure</li>
+          <li>Smart Cities and Intelligent Urban Systems</li>
+          <li>Blockchain and Secure Digital Technologies</li>
+          <li>Data Governance and Digital Trust</li>
+          <li>Smart Utilities and Infrastructure Monitoring</li>
+          <li>Risk Assessment and Cyber Resilience</li>
+        </ul>
+      </details>
+      <details class="track" id="track-5">
+        <summary><span class="track-num">05</span><span class="track-title">Advanced Manufacturing, Materials &amp; Industrial Technologies</span><span class="track-count">10 topics</span><span class="track-icon" aria-hidden="true"></span></summary>
+        <ul class="track-topics">
+          <li>Industry 4.0 and Smart Factories</li>
+          <li>Additive Manufacturing and 3D Printing</li>
+          <li>Intelligent Manufacturing and Automation</li>
+          <li>Advanced Materials and Composites</li>
+          <li>Functional and Smart Materials</li>
+          <li>Materials Characterization and Testing</li>
+          <li>Sustainable Manufacturing Technologies</li>
+          <li>Product Design and Engineering Innovation</li>
+          <li>Digital Manufacturing and Simulation</li>
+          <li>Quality Engineering and Reliability</li>
+        </ul>
+      </details>
     </div>
   </div></section>
   <section class="section" id="speakers"><div class="wrap reveal">
@@ -174,6 +261,13 @@
     <span>31 October – 4 November 2027</span>
   </div>
 </div></footer>
+<nav class="quick-dock" aria-label="Quick links" data-quick-dock>
+  <a href="mailto:iceast@mtc.edu.om" data-qc-mail><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/></svg><span class="qd-label">Email us</span></a>
+  <a href="#" data-qc-tel data-qc-phone hidden><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.6 3.5 9 3l1.6 4-2 1.3a11 11 0 0 0 5.1 5.1l1.3-2 4 1.6-.5 2.4a2 2 0 0 1-2 1.6A15 15 0 0 1 5 5.5a2 2 0 0 1 1.6-2z"/></svg><span class="qd-label">Call us</span></a>
+  <a href="../call-for-papers.html"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg><span class="qd-label">Call for Papers</span></a>
+  <a href="../important-dates.html"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M8 3v4M16 3v4"/></svg><span class="qd-label">Important Dates</span></a>
+  <a href="../venue.html#location"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span class="qd-label">Find the Venue</span></a>
+</nav>
 <script src="../js/conference-data.js" defer></script>
 <script src="../js/main.js" defer></script>
 </body>

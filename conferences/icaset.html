@@ -36,6 +36,17 @@
 <body class="theme-cyan">
 <a class="skip-link" href="#main">Skip to content</a>
 <div class="accent-band"><span class="r"></span><span class="c"></span><span class="n"></span></div>
+<div class="utility-bar"><div class="wrap">
+  <ul class="ub-info" aria-label="Conference details">
+    <li><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M8 3v4M16 3v4"/></svg><span class="ub-long" data-conf="datesLong">31 October – 4 November 2027</span><span class="ub-short" data-conf="datesShort">31 Oct – 4 Nov 2027</span></li>
+    <li class="ub-venue"><a href="../venue.html#location"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span>Military Technological College, Muscat</span></a></li>
+  </ul>
+  <ul class="ub-contact" aria-label="Contact">
+    <li data-qc-phone hidden><a href="#" data-qc-tel aria-label="Call the conference office"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.6 3.5 9 3l1.6 4-2 1.3a11 11 0 0 0 5.1 5.1l1.3-2 4 1.6-.5 2.4a2 2 0 0 1-2 1.6A15 15 0 0 1 5 5.5a2 2 0 0 1 1.6-2z"/></svg><span class="ub-text" data-conf="phone"></span></a></li>
+    <li><a href="mailto:iceast@mtc.edu.om" data-qc-mail aria-label="Email iceast@mtc.edu.om"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/></svg><span class="ub-text" data-conf="email">iceast@mtc.edu.om</span></a></li>
+    <li class="ub-cta-item"><a class="ub-cta" href="../call-for-papers.html">Call for Papers</a></li>
+  </ul>
+</div></div>
 <header class="site-header"><div class="wrap">
   <a class="brand" href="../index.html">
     <img src="../images/logo-mtc.png" alt="Military Technological College crest" width="52" height="52">
@@ -60,6 +71,10 @@
     <img class="hero-crest" src="../images/logo-mtc.png" alt="" width="96" height="96">
     <p class="conf-hero-full">3rd International Conference on Aeronautical Sciences, Engineering &amp; Technology</p>
     <h1>ICASET 2027</h1>
+    <div class="conf-theme">
+      <p class="conf-theme-label">2027 Theme</p>
+      <p class="conf-theme-text">Shaping the Future of Aviation and Space: Innovation, Sustainability and Intelligent Technologies</p>
+    </div>
     <p class="date-line"><span class="date-banner">31 October – 4 November 2027</span></p>
     <p class="venue-line">Under ICEAST 2027 · Military Technological College · Muscat, Oman</p>
   </div></section>
@@ -77,11 +92,133 @@
     <div class="section-head">
       <p class="eyebrow"><span class="dots"><i class="r"></i><i class="c"></i><i class="n"></i></span> Programme Structure</p>
       <h2>Conference Tracks</h2>
+      <p class="tracks-meta">7 main tracks &middot; 88 sub-track topics</p>
     </div>
-    <div class="placeholder">
-      <span class="badge">Coming Soon</span>
-      <h3>To Be Announced</h3>
-      <p>The ICASET 2027 tracks and topic areas will be published here.</p>
+    <div class="tracks" data-tracks>
+      <div class="tracks-tools"><button type="button" data-tracks-expand hidden>Expand all</button></div>
+      <details class="track" id="track-1" open>
+        <summary><span class="track-num">01</span><span class="track-title">Aerodynamics, Propulsion &amp; Flight Sciences</span><span class="track-count">12 topics</span><span class="track-icon" aria-hidden="true"></span></summary>
+        <ul class="track-topics">
+          <li>Compressible and Incompressible Aerodynamics</li>
+          <li>Subsonic, Transonic, Supersonic and Hypersonic Flows</li>
+          <li>Boundary Layer Physics, Turbulence and Flow Control</li>
+          <li>Computational Fluid Dynamics (CFD)</li>
+          <li>Experimental Aerodynamics and Wind Tunnel Testing</li>
+          <li>Aeroelasticity and Fluid-Structure Interaction</li>
+          <li>Aircraft Performance, Stability and Control</li>
+          <li>Flight Mechanics and Flight Dynamics</li>
+          <li>High-Lift Systems and Aircraft Configuration Design</li>
+          <li>Gas Turbine Engines and Propulsion Systems</li>
+          <li>Advanced and Hybrid Propulsion Technologies</li>
+          <li>Aerodynamic Design, Optimization and Simulation</li>
+        </ul>
+      </details>
+      <details class="track" id="track-2">
+        <summary><span class="track-num">02</span><span class="track-title">Avionics, Intelligent Aerospace Systems &amp; Autonomous Technologies</span><span class="track-count">12 topics</span><span class="track-icon" aria-hidden="true"></span></summary>
+        <ul class="track-topics">
+          <li>Avionics Architectures and Integrated Systems</li>
+          <li>Navigation, Communication and Surveillance Systems</li>
+          <li>Flight Control and Mission Systems</li>
+          <li>Sensors, Sensor Fusion and Signal Processing</li>
+          <li>Embedded Aerospace Systems</li>
+          <li>Autonomous Aerospace Systems</li>
+          <li>Artificial Intelligence and Machine Learning in Aerospace</li>
+          <li>Human-Machine Interaction and Smart Cockpits</li>
+          <li>Aerospace Software Engineering</li>
+          <li>Digital Avionics and Integrated Modular Avionics</li>
+          <li>Electronic Warfare and Mission Systems</li>
+          <li>Aerospace Cybersecurity and Secure Navigation</li>
+        </ul>
+      </details>
+      <details class="track" id="track-3">
+        <summary><span class="track-num">03</span><span class="track-title">Sustainable Aviation &amp; Future Air Mobility</span><span class="track-count">12 topics</span><span class="track-icon" aria-hidden="true"></span></summary>
+        <ul class="track-topics">
+          <li>Sustainable Aviation Fuels (SAF)</li>
+          <li>Electric and Hybrid-Electric Aircraft</li>
+          <li>Hydrogen-Powered Aviation Systems</li>
+          <li>Advanced Air Mobility (AAM)</li>
+          <li>Urban Air Mobility (UAM)</li>
+          <li>eVTOL Aircraft Technologies</li>
+          <li>Green Airport and Aviation Infrastructure</li>
+          <li>Energy Storage Technologies for Aviation</li>
+          <li>Environmentally Sustainable Aircraft Design</li>
+          <li>Noise and Emissions Reduction Technologies</li>
+          <li>Smart and Connected Aviation Systems</li>
+          <li>Future Air Transportation Concepts</li>
+        </ul>
+      </details>
+      <details class="track" id="track-4">
+        <summary><span class="track-num">04</span><span class="track-title">Aerospace Structures, Materials, Manufacturing &amp; MRO</span><span class="track-count">13 topics</span><span class="track-icon" aria-hidden="true"></span></summary>
+        <ul class="track-topics">
+          <li>Aerospace Structural Design and Analysis</li>
+          <li>Structural Mechanics and Structural Integrity</li>
+          <li>Lightweight Structures and Composites</li>
+          <li>Advanced Aerospace Materials</li>
+          <li>Smart and Multifunctional Materials</li>
+          <li>Materials Characterization and Testing</li>
+          <li>Fatigue, Fracture and Damage Tolerance</li>
+          <li>Additive Manufacturing and 3D Printing</li>
+          <li>Advanced Manufacturing Technologies</li>
+          <li>Structural Health Monitoring</li>
+          <li>Non-Destructive Testing and Evaluation (NDT/NDE)</li>
+          <li>Maintenance, Repair and Overhaul (MRO)</li>
+          <li>Predictive Maintenance and Lifecycle Management</li>
+        </ul>
+      </details>
+      <details class="track" id="track-5">
+        <summary><span class="track-num">05</span><span class="track-title">Unmanned Aerial Systems (UAS) &amp; Drone Technologies</span><span class="track-count">13 topics</span><span class="track-icon" aria-hidden="true"></span></summary>
+        <ul class="track-topics">
+          <li>UAS Design and Development</li>
+          <li>Autonomous Flight, Guidance and Control</li>
+          <li>AI and Machine Learning for UAS</li>
+          <li>Computer Vision and Perception Systems</li>
+          <li>Swarm Intelligence and Cooperative UAV Operations</li>
+          <li>Drone Navigation and Mission Planning</li>
+          <li>UAS Sensors, Payloads and Data Systems</li>
+          <li>Beyond Visual Line of Sight (BVLOS) Operations</li>
+          <li>UTM and Airspace Integration</li>
+          <li>UAS Safety and Airworthiness</li>
+          <li>Drone Cybersecurity and Secure Communications</li>
+          <li>Civil, Commercial and Defence Drone Applications</li>
+          <li>Counter-UAS and Airspace Protection Technologies</li>
+        </ul>
+      </details>
+      <details class="track" id="track-6">
+        <summary><span class="track-num">06</span><span class="track-title">Aviation Safety, Operations &amp; Smart Infrastructure</span><span class="track-count">13 topics</span><span class="track-icon" aria-hidden="true"></span></summary>
+        <ul class="track-topics">
+          <li>Safety Management Systems (SMS)</li>
+          <li>Aviation Risk Assessment and Management</li>
+          <li>Aviation Security and Resilience</li>
+          <li>Aircraft Accident and Incident Investigation</li>
+          <li>Human Factors and Crew Resource Management</li>
+          <li>Airworthiness and Certification</li>
+          <li>Aviation Regulations, Standards and Compliance</li>
+          <li>Air Traffic Management and Air Navigation</li>
+          <li>Airport Planning and Infrastructure</li>
+          <li>Smart Airports and Digital Airport Systems</li>
+          <li>Ground Operations and Airline Management</li>
+          <li>Emergency Preparedness and Crisis Management</li>
+          <li>Aviation Training and Competency Development</li>
+        </ul>
+      </details>
+      <details class="track" id="track-7">
+        <summary><span class="track-num">07</span><span class="track-title">Space Engineering, Technology &amp; Applications</span><span class="track-count">13 topics</span><span class="track-icon" aria-hidden="true"></span></summary>
+        <ul class="track-topics">
+          <li>Spacecraft and Satellite Systems</li>
+          <li>CubeSats and Small Satellite Technologies</li>
+          <li>Launch Vehicle Systems and Propulsion</li>
+          <li>Orbital Mechanics and Mission Design</li>
+          <li>Space Guidance, Navigation and Control</li>
+          <li>Space Avionics and Communications</li>
+          <li>Space Structures, Materials and Thermal Systems</li>
+          <li>Remote Sensing and Earth Observation</li>
+          <li>Space Robotics and Autonomous Space Systems</li>
+          <li>Space Situational Awareness and Space Traffic Management</li>
+          <li>Space Debris Monitoring and Mitigation</li>
+          <li>Lunar, Planetary and Deep-Space Exploration</li>
+          <li>Emerging and Sustainable Space Technologies</li>
+        </ul>
+      </details>
     </div>
   </div></section>
   <section class="section" id="speakers"><div class="wrap reveal">
@@ -174,6 +311,13 @@
     <span>31 October – 4 November 2027</span>
   </div>
 </div></footer>
+<nav class="quick-dock" aria-label="Quick links" data-quick-dock>
+  <a href="mailto:iceast@mtc.edu.om" data-qc-mail><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/></svg><span class="qd-label">Email us</span></a>
+  <a href="#" data-qc-tel data-qc-phone hidden><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.6 3.5 9 3l1.6 4-2 1.3a11 11 0 0 0 5.1 5.1l1.3-2 4 1.6-.5 2.4a2 2 0 0 1-2 1.6A15 15 0 0 1 5 5.5a2 2 0 0 1 1.6-2z"/></svg><span class="qd-label">Call us</span></a>
+  <a href="../call-for-papers.html"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg><span class="qd-label">Call for Papers</span></a>
+  <a href="../important-dates.html"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M8 3v4M16 3v4"/></svg><span class="qd-label">Important Dates</span></a>
+  <a href="../venue.html#location"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span class="qd-label">Find the Venue</span></a>
+</nav>
 <script src="../js/conference-data.js" defer></script>
 <script src="../js/main.js" defer></script>
 </body>
