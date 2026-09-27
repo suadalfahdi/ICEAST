@@ -1,0 +1,444 @@
+/* =============================================================
+   Committees page (committees.html): leadership organisation chart (.o1-*)
+   and committee explorer (.c2-*). Loaded only on that page, after main.css.
+   ============================================================= */
+
+/* ---------- Leadership organisation chart ---------- */
+/* =====================================================================
+   L1 · Organisation chart (ICEAST leadership) · prefix .o1-
+   Layout follows the width of .o1-chart (container query "o1"), so it
+   behaves the same on the page, in a preview frame or in a phone mock:
+     < 640px   vertical tree on a gold left rail (phones)
+     640-999   wing chart: Chair centred, Co-Chairs 2 + 2 on side rails
+     >= 1000   full chart: Co-Chairs flank the Chair in one row of five
+   Connectors are drawn with pseudo-elements only (no images).
+   ===================================================================== */
+
+.o1-section{
+  --o1-line:var(--brand-sand);
+  --o1-gap:14px;        /* phone: space between stacked cards   */
+  --o1-doty:47px;       /* phone: rail dot distance from card top */
+  --o1-ph:60px;         /* photo diameter                        */
+  --o1-dot:var(--paper);/* centre of a rail dot                  */
+}
+@supports (color:color-mix(in srgb,red,blue)){
+  .o1-section{--o1-line:color-mix(in srgb,var(--brand-olive) 55%,var(--paper))}
+}
+
+/* ---------- Heading (site .section-head, centred) ---------- */
+.o1-head{margin:0 auto 44px;text-align:center}
+.o1-head .eyebrow{justify-content:center}
+.o1-head h2::after{left:50%;transform:translateX(-50%)}
+.o1-lead{max-width:640px;margin:0 auto;font-size:16.5px;color:var(--fg2)}
+
+/* ---------- Tree skeleton (phone first) ---------- */
+.o1-chart{container:o1 / inline-size}
+.o1-tree,.o1-branch,.o1-row{list-style:none;margin:0;padding:0}
+.o1-tree{max-width:560px;margin:0 auto;padding-left:30px}
+.o1-node{position:relative;min-width:0}
+.o1-card+.o1-branch,.o1-card+.o1-row,.o1-row>.o1-node+.o1-node{margin-top:var(--o1-gap)}
+.o1-branch--sub{margin-left:30px}
+
+/* ---------- Card ---------- */
+.o1-card{
+  position:relative;display:grid;grid-template-columns:var(--o1-ph) minmax(0,1fr);column-gap:16px;align-items:start;
+  padding:17px 16px 16px;border:1px solid var(--border);border-radius:var(--radius-card);
+  background:linear-gradient(var(--brand-sand),var(--brand-sand)) top/100% 3px no-repeat var(--paper);
+  box-shadow:0 1px 2px rgba(28,27,22,.05);
+}
+/* Patronage: thick + thin gold double rule, warm paper */
+.o1-card--chief,.o1-card--patron{
+  --o1-dot:var(--brand-olive);
+  border-color:var(--brand-sand);
+  background:linear-gradient(var(--brand-olive) 0 3px,transparent 3px 6px,var(--brand-olive) 6px 7px) top/100% 7px no-repeat,
+             linear-gradient(180deg,var(--paper-2),var(--paper) 70%);
+}
+/* ICEAST Chair: site accent band, gold frame, soft gold wash */
+.o1-card--chair{
+  --o1-dot:var(--brand-olive);
+  border-color:var(--brand-olive);
+  background:linear-gradient(90deg,var(--brand-red) 0 33.34%,var(--brand-cyan) 33.34% 66.67%,var(--brand-navy) 66.67%) top/100% 3px no-repeat,
+             linear-gradient(180deg,var(--brand-olive-soft),var(--paper) 72%);
+  box-shadow:var(--shadow-lift);
+}
+
+/* Photo frame: a real <img> later replaces the svg inside this span */
+.o1-photo{
+  display:flex;align-items:flex-end;justify-content:center;flex:none;
+  width:var(--o1-ph);height:var(--o1-ph);border-radius:50%;overflow:hidden;
+  border:2px solid var(--brand-olive);
+  background:radial-gradient(circle at 50% 34%,var(--paper) 0,var(--brand-olive-soft) 74%);
+  box-shadow:0 0 0 3px var(--paper),0 0 0 4px var(--brand-sand);
+  color:var(--brand-sand);
+}
+.o1-photo svg{display:block;width:90%;height:90%;margin-bottom:-12%;fill:currentColor}
+.o1-photo img{display:block;width:100%;height:100%;object-fit:cover}
+
+/* Text */
+.o1-text{min-width:0}
+.o1-role{margin:0;font-size:11.5px;font-weight:700;line-height:1.35;letter-spacing:.14em;text-transform:uppercase;color:var(--fg2)}
+.o1-role::after{content:"";display:block;width:26px;height:2px;margin:7px 0 8px;border-radius:1px;background:var(--brand-olive)}
+.o1-card--chair .o1-role{color:var(--fg1)}
+.o1-nw{white-space:nowrap}
+.o1-name{margin:0;font-family:var(--font-display);font-size:17px;font-weight:700;line-height:1.22;letter-spacing:.01em;color:var(--fg1);overflow-wrap:anywhere}
+.o1-name{--o1-rank-h:18px}
+/* Rank / grade: verbatim, a small gold-edged capsule on its own line above the name */
+.o1-rank{
+  display:block;width:-moz-fit-content;width:fit-content;height:var(--o1-rank-h);margin:0 0 6px;padding:0 9px 0 10px;
+  border:1px solid var(--brand-sand);border-radius:999px;background:var(--paper);
+  font-family:var(--font-body);font-size:10.5px;font-weight:700;line-height:calc(var(--o1-rank-h) - 2px);letter-spacing:.16em;
+  color:var(--fg2);white-space:nowrap;
+}
+.o1-title{margin:6px 0 0;font-size:14.5px;font-style:italic;line-height:1.45;color:var(--fg2);overflow-wrap:anywhere}
+
+/* ---------- Phone connectors: left rail, dot + tick per card ---------- */
+.o1-card::before{
+  content:"";position:absolute;left:-21px;width:2px;
+  top:var(--o1-doty);bottom:calc(-1 * (var(--o1-gap) + var(--o1-doty)) - 1px); /* 1px overlap hides sub-pixel seams */
+  background:var(--o1-line);
+}
+.o1-card::after{
+  content:"";position:absolute;left:-26px;top:calc(var(--o1-doty) - 6px);width:26px;height:12px;
+  background:radial-gradient(circle at 6px 50%,var(--o1-dot) 0 2.6px,var(--brand-olive) 3.2px 4.6px,transparent 5.2px),
+             linear-gradient(var(--o1-line),var(--o1-line)) right center/14px 2px no-repeat;
+}
+.o1-row>.o1-node:last-child>.o1-card::before{content:none}
+/* Program Chair: indented, the main rail runs past it, an elbow drops from the Chair */
+.o1-node--program>.o1-card::before{left:-51px}
+.o1-node--program>.o1-card::after{
+  left:-16px;top:calc(-1 * var(--o1-gap) - 1px);width:16px;height:calc(var(--o1-gap) + var(--o1-doty) + 2px);
+  background:none;border:solid var(--o1-line);border-width:0 0 2px 2px;border-bottom-left-radius:10px;
+}
+
+@container o1 (max-width:360px){
+  .o1-tree{--o1-ph:52px;--o1-doty:43px}
+  .o1-card{column-gap:12px;padding-left:12px;padding-right:12px}
+}
+
+/* =====================================================================
+   Chart mode (chart width >= 640px)
+   ===================================================================== */
+@container o1 (min-width:640px){
+  .o1-tree{max-width:none;padding-left:0}
+  .o1-tree,.o1-branch{display:flex;flex-direction:column;align-items:center}
+  .o1-node{display:flex;flex-direction:column;align-items:center;width:100%}
+  .o1-card+.o1-branch,.o1-card+.o1-row,.o1-row>.o1-node+.o1-node{margin-top:0}
+  .o1-branch--sub{margin-left:0}
+
+  .o1-card{--o1-ph:84px;display:flex;flex-direction:column;align-items:center;width:100%;padding:26px 16px 22px;text-align:center}
+  .o1-card::before,.o1-card::after{content:none}
+  .o1-card--chief{--o1-ph:116px;max-width:288px;padding-top:30px}
+  .o1-card--patron{--o1-ph:104px;max-width:264px;padding-top:30px}
+  .o1-card--chair{--o1-ph:120px}
+  .o1-photo{margin-bottom:18px}
+  .o1-role{font-size:11px;letter-spacing:.13em}
+  .o1-role::after{margin:8px auto 10px}
+  .o1-name,.o1-title{text-wrap:balance}
+  .o1-rank{margin:0 auto 7px}
+  .o1-row>.o1-node:not(.o1-node--chair)>.o1-card .o1-name:not(:has(.o1-rank))::before{content:"";display:block;height:calc(var(--o1-rank-h) + 7px)}
+  .o1-name{font-size:18px}
+  .o1-card--chief .o1-name,.o1-card--patron .o1-name{font-size:21px}
+  .o1-card--chair .o1-name{font-size:22px}
+
+  /* vertical stems between levels */
+  .o1-branch{--o1-stem:36px;position:relative;width:100%;padding-top:var(--o1-stem)}
+  .o1-branch::before{content:"";position:absolute;left:50%;top:0;width:2px;height:var(--o1-stem);margin-left:-1px;background:var(--o1-line)}
+
+  /* level 3: trunk from the Patron, a horizontal bus, a stem into each card */
+  .o1-row{
+    --o1-t1:30px;--o1-t2:26px;--o1-rg:18px;--o1-bus:6px;
+    position:relative;display:grid;width:100%;padding-top:calc(var(--o1-t1) + var(--o1-t2));
+    grid-template-columns:minmax(0,1fr) minmax(0,1.12fr) minmax(0,1fr);column-gap:20px;row-gap:var(--o1-rg);
+  }
+  .o1-row::before{content:"";position:absolute;left:50%;top:0;width:2px;height:var(--o1-t1);margin-left:-1px;background:var(--o1-line)}
+  .o1-row::after{content:"";position:absolute;top:calc(var(--o1-t1) - 1px);left:var(--o1-bus);right:var(--o1-bus);height:2px;background:var(--o1-line)}
+  .o1-row>.o1-node{align-items:stretch}
+  .o1-row>.o1-node>.o1-card{flex:1 1 auto}
+  .o1-row>.o1-node::before{content:"";position:absolute;left:50%;top:calc(-1 * var(--o1-t2));width:2px;height:var(--o1-t2);margin-left:-1px;background:var(--o1-line)}
+
+  /* ICEAST Chair: centre column, spans the card row and the Program Chair row */
+  .o1-node--chair{grid-column:2;grid-row:1 / span 2;display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:subgrid}
+  .o1-node--chair::after{
+    content:"";position:absolute;left:50%;top:calc(-1 * var(--o1-t2) - 6px);width:12px;height:12px;margin-left:-6px;
+    border-radius:50%;background:var(--brand-olive);box-shadow:0 0 0 3px var(--paper);
+  }
+  .o1-node--chair>.o1-branch{--o1-stem:18px}
+  .o1-node--chair>.o1-branch::before{top:calc(-1 * var(--o1-rg));height:calc(var(--o1-stem) + var(--o1-rg))}
+  .o1-node--program{flex:1 1 auto;align-items:stretch}
+  .o1-node--program>.o1-card{flex:1 1 auto}
+
+  /* wings: Co-Chairs 1-2 on a left rail, 3-4 on a right rail */
+  .o1-node--e1{grid-column:1;grid-row:1}
+  .o1-node--e2{grid-column:1;grid-row:2}
+  .o1-node--e3{grid-column:3;grid-row:1}
+  .o1-node--e4{grid-column:3;grid-row:2}
+  .o1-node--e1,.o1-node--e2{padding-left:28px}
+  .o1-node--e3,.o1-node--e4{padding-right:28px}
+  .o1-row>.o1-node--e1::before,.o1-row>.o1-node--e2::before{left:6px;margin-left:0}
+  .o1-row>.o1-node--e3::before,.o1-row>.o1-node--e4::before{left:auto;right:6px;margin-left:0}
+  .o1-row>.o1-node--e1::before,.o1-row>.o1-node--e3::before{height:auto;bottom:calc(-1 * var(--o1-rg) - 1px)}
+  .o1-row>.o1-node--e2::before,.o1-row>.o1-node--e4::before{top:0;height:50%}
+  .o1-row>.o1-node--e1::after,.o1-row>.o1-node--e2::after,.o1-row>.o1-node--e3::after,.o1-row>.o1-node--e4::after{content:"";position:absolute;top:calc(50% - 6px);width:27px;height:12px}
+  .o1-row>.o1-node--e1::after,.o1-row>.o1-node--e2::after{
+    left:1px;
+    background:radial-gradient(circle at 6px 50%,var(--paper) 0 2.6px,var(--brand-olive) 3.2px 4.6px,transparent 5.2px),
+               linear-gradient(var(--o1-line),var(--o1-line)) right center/16px 2px no-repeat;
+  }
+  .o1-row>.o1-node--e3::after,.o1-row>.o1-node--e4::after{
+    right:1px;
+    background:radial-gradient(circle at calc(100% - 6px) 50%,var(--paper) 0 2.6px,var(--brand-olive) 3.2px 4.6px,transparent 5.2px),
+               linear-gradient(var(--o1-line),var(--o1-line)) left center/16px 2px no-repeat;
+  }
+}
+
+/* =====================================================================
+   Full chart (chart width >= 1000px): one row of five, Chair in the centre
+   ===================================================================== */
+@container o1 (min-width:1000px){
+  .o1-row{
+    --o1-rg:0px;--o1-cg:16px;
+    --o1-bus:calc((100% - 4 * var(--o1-cg)) / 10.4); /* centre of the first / last column */
+    grid-template-columns:repeat(2,minmax(0,1fr)) minmax(0,1.2fr) repeat(2,minmax(0,1fr));
+    column-gap:var(--o1-cg);
+  }
+  .o1-node--e1{grid-column:1;grid-row:1}
+  .o1-node--e2{grid-column:2;grid-row:1}
+  .o1-node--chair{grid-column:3}
+  .o1-node--e3{grid-column:4;grid-row:1}
+  .o1-node--e4{grid-column:5;grid-row:1}
+  .o1-node--e1,.o1-node--e2,.o1-node--e3,.o1-node--e4{padding:0}
+  .o1-row>.o1-node--e1::before,.o1-row>.o1-node--e2::before,.o1-row>.o1-node--e3::before,.o1-row>.o1-node--e4::before{
+    left:50%;right:auto;top:calc(-1 * var(--o1-t2));bottom:auto;height:var(--o1-t2);margin-left:-1px;
+  }
+  .o1-row>.o1-node--e1::after,.o1-row>.o1-node--e2::after,.o1-row>.o1-node--e3::after,.o1-row>.o1-node--e4::after{content:none}
+  .o1-node--chair>.o1-branch{--o1-stem:30px}
+}
+@container o1 (min-width:1120px){
+  .o1-row{--o1-cg:20px}
+  .o1-card{padding-left:18px;padding-right:18px}
+}
+
+/* ---------- Interaction and preference hooks ---------- */
+@media (hover:hover){
+  .o1-card:hover{border-color:var(--border-strong);box-shadow:var(--shadow-lift)}
+  .o1-card--chair:hover{border-color:var(--brand-olive-hover)}
+}
+@media (prefers-reduced-motion:no-preference){
+  .o1-card{transition:border-color 160ms var(--ease-out),box-shadow 240ms var(--ease-out)}
+}
+@media (forced-colors:active){
+  .o1-section :is(.o1-card,.o1-node,.o1-row,.o1-branch)::before,
+  .o1-section :is(.o1-card,.o1-node,.o1-row)::after{forced-color-adjust:none;background:CanvasText}
+  .o1-section .o1-card::after{top:calc(var(--o1-doty) - 1px);height:2px}
+  .o1-section :is(.o1-node--e1,.o1-node--e2,.o1-node--e3,.o1-node--e4)::after{top:calc(50% - 1px);height:2px}
+  .o1-section .o1-node--program>.o1-card::after{top:calc(-1 * var(--o1-gap) - 1px);height:calc(var(--o1-gap) + var(--o1-doty) + 2px);background:none;border-color:CanvasText}
+}
+
+/* ---------- Committee explorer ---------- */
+/* C2 - Committee explorer.
+   Base = accordion (phones, tablets, and every width without JavaScript).
+   From 881px C2.js adds .c2-is-tabs to [data-c2]: committee list on the left, selected committee on the right.
+   All selectors are scoped to the c2- prefix; colours and fonts come from the site tokens in css/main.css.
+   Small gold captions use --brand-olive-press, the darkest gold token (about 4.4:1 on white). */
+
+/* ---------- Section head ---------- */
+.c2-head{max-width:800px}
+.c2-intro{margin:0 0 8px;color:var(--fg2);max-width:720px}
+.c2-meta{margin:0;font-size:14px;letter-spacing:.05em;color:var(--fg3)}
+
+/* ---------- Explorer shell ---------- */
+.c2-explorer{position:relative;min-width:0;scroll-margin-top:96px}
+.c2-tools{display:flex;justify-content:flex-end}
+.c2-expand{margin:0 0 4px;padding:6px 14px;font:inherit;font-size:13.5px;color:var(--fg2);background:var(--paper);border:1px solid var(--border-strong);border-radius:var(--radius-btn);cursor:pointer;transition:border-color 140ms var(--ease-out),color 140ms var(--ease-out)}
+.c2-expand[hidden]{display:none}
+.c2-expand:hover{border-color:var(--brand-olive);color:var(--brand-olive-press)}
+.c2-expand:focus-visible{outline:2px solid var(--focus-ring);outline-offset:2px}
+
+/* Group labels ("Principal committees", "Sub-committees") */
+.c2-group{display:flex;align-items:center;gap:14px;margin:30px 0 12px;font-size:12.5px;font-weight:700;letter-spacing:.2em;line-height:1.4;text-transform:uppercase;color:var(--brand-olive-press)}
+.c2-group span{min-width:0}
+.c2-group::after{content:"";flex:1 1 24px;height:1px;background:linear-gradient(90deg,var(--border-strong),transparent)}
+.c2-tools+.c2-group{margin-top:6px}
+
+/* ---------- Committee medallion (icon in a gold ring) ---------- */
+.c2-medal{flex:none;display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--paper);border:1px solid var(--border-strong);box-shadow:inset 0 0 0 3px var(--paper),inset 0 0 0 4px var(--brand-olive-soft);color:var(--brand-olive-press);transition:background-color 200ms var(--ease-out),border-color 200ms var(--ease-out),color 200ms var(--ease-out)}
+.c2-medal svg{display:block;width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.c2-medal-lg,
+.c2-item[open]>.c2-summary .c2-medal,
+.c2-tab[aria-selected="true"] .c2-medal{background:linear-gradient(145deg,var(--brand-olive),var(--brand-olive-hover));border-color:var(--brand-olive-hover);box-shadow:inset 0 0 0 3px rgba(255,255,255,.16),0 6px 14px -8px rgba(135,122,11,.7);color:var(--paper)}
+.c2-medal-lg{width:58px;height:58px}
+.c2-medal-lg svg{width:27px;height:27px}
+
+/* ---------- Accordion items ---------- */
+.c2-item{min-width:0;margin:0 0 10px;background:var(--paper);border:1px solid var(--border);border-radius:var(--radius-card);scroll-margin-top:96px;transition:border-color 200ms var(--ease-out),box-shadow 240ms var(--ease-out)}
+.c2-item:hover{border-color:var(--border-strong)}
+.c2-item[open]{border-color:var(--brand-sand);box-shadow:var(--shadow-lift)}
+.c2-summary{display:flex;align-items:center;gap:16px;padding:16px 20px;list-style:none;cursor:pointer;border-radius:inherit}
+.c2-summary::-webkit-details-marker{display:none}
+.c2-summary::marker{content:""}
+.c2-summary:focus-visible{outline:2px solid var(--brand-olive);outline-offset:-3px}
+.c2-item[open]>.c2-summary{background:linear-gradient(90deg,var(--brand-olive-soft),var(--paper) 80%);border-radius:var(--radius-card) var(--radius-card) 0 0;box-shadow:inset 3px 0 0 var(--brand-olive)}
+.c2-sum-text{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+.c2-sum-name{font-family:var(--font-display);font-size:18px;line-height:1.3;color:var(--fg1);overflow-wrap:anywhere;transition:color 200ms var(--ease-out)}
+.c2-summary:hover .c2-sum-name{color:var(--brand-olive-press)}
+.c2-sum-meta{font-size:14.5px;line-height:1.45;color:var(--fg2);overflow-wrap:anywhere}
+.c2-sum-meta.c2-is-tba-text{font-style:italic;color:var(--fg3)}
+.c2-sum-person{display:inline-block;max-width:100%}
+.c2-sum-role{font-size:11.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--brand-olive-press)}
+.c2-sum-role::after{content:"";display:inline-block;width:14px;height:1px;margin:0 2px 0 8px;vertical-align:middle;background:var(--brand-sand)}
+.c2-toggle{flex:none;position:relative;width:30px;height:30px;border-radius:50%;border:1px solid var(--border-strong);color:var(--fg2);transition:transform 240ms var(--ease-out),background-color 200ms var(--ease-out),border-color 200ms var(--ease-out),color 200ms var(--ease-out)}
+.c2-toggle::before,.c2-toggle::after{content:"";position:absolute;left:50%;top:50%;width:11px;height:1.5px;background:currentColor;transform:translate(-50%,-50%)}
+.c2-toggle::after{transform:translate(-50%,-50%) rotate(90deg)}
+.c2-summary:hover .c2-toggle{border-color:var(--brand-olive);color:var(--brand-olive-press)}
+.c2-item[open]>.c2-summary .c2-toggle{transform:rotate(45deg);background:var(--brand-olive);border-color:var(--brand-olive);color:var(--paper)}
+
+/* ---------- Committee panel (shared by accordion and tabs) ---------- */
+.c2-body{container:c2-panel/inline-size;padding:24px 24px 26px;border-top:1px solid var(--border)}
+.c2-body:focus-visible{outline:2px solid var(--focus-ring);outline-offset:-6px}
+.c2-panel-head{position:relative;display:flex;align-items:center;gap:18px;margin:0 0 26px;padding-bottom:20px;border-bottom:1px solid var(--border)}
+.c2-panel-head::after{content:"";position:absolute;left:0;bottom:-2px;width:64px;height:3px;border-radius:2px;background:linear-gradient(90deg,var(--brand-olive),var(--brand-sand))}
+.c2-panel-titles{flex:1;min-width:0}
+.c2-kicker{margin:0 0 4px;font-size:12px;font-weight:700;letter-spacing:.18em;line-height:1.4;text-transform:uppercase;color:var(--brand-olive-press)}
+.c2-title{margin:0;font-size:clamp(22px,2.3vw,27px);line-height:1.2;color:var(--fg1);overflow-wrap:anywhere}
+/* In the accordion the summary already names the committee: keep the heading for screen readers only */
+.c2-explorer:not(.c2-is-tabs) .c2-panel-head{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+
+/* Profile photo frame. A real photo later: <img src="images/people/<id>.webp" alt=""> inside the same span */
+.c2-photo{flex:none;position:relative;display:flex;align-items:flex-end;justify-content:center;width:64px;height:64px;overflow:hidden;border-radius:50%;border:3px solid var(--paper);background:linear-gradient(165deg,var(--paper) 10%,var(--brand-olive-soft) 90%);box-shadow:0 0 0 1.5px var(--brand-olive),0 8px 18px -10px rgba(135,122,11,.55);color:var(--brand-sand)}
+.c2-photo svg{display:block;width:82%;height:82%;margin-bottom:-5%;fill:currentColor}
+.c2-photo img{display:block;width:100%;height:100%;object-fit:cover}
+.c2-is-tba .c2-photo{border:1.5px dashed var(--border-strong);background:var(--paper-2);box-shadow:none;color:var(--border)}
+
+/* Rank / grade prefix, shown verbatim (dark text in a sand frame: gold at 11px would fall below 4.5:1) */
+.c2-rank{display:inline-block;margin-right:.3em;padding:1px 6px 0;border:1px solid var(--brand-sand);border-radius:3px;background:var(--paper);font-family:var(--font-body);font-size:11px;font-weight:700;font-style:normal;letter-spacing:.12em;line-height:1.5;vertical-align:middle;color:var(--fg2);white-space:nowrap}
+
+/* Chair spotlight */
+.c2-leads{display:grid;grid-template-columns:minmax(0,1fr);gap:14px;margin:0 0 28px}
+.c2-lead{position:relative;overflow:hidden;display:flex;align-items:center;gap:18px 24px;min-width:0;padding:24px 28px;border:1px solid var(--brand-sand);border-radius:var(--radius-card);background:linear-gradient(115deg,var(--brand-olive-soft),var(--paper) 72%);box-shadow:inset 0 0 0 5px rgba(255,255,255,.75),inset 0 0 0 6px rgba(188,169,16,.22)}
+.c2-lead .c2-photo{width:100px;height:100px;border-width:4px;box-shadow:0 0 0 2px var(--brand-olive),0 12px 24px -12px rgba(135,122,11,.6)}
+.c2-lead-text{position:relative;z-index:1;flex:1;min-width:0}
+.c2-role{margin:0 0 6px;font-size:12px;font-weight:700;letter-spacing:.2em;line-height:1.4;text-transform:uppercase;color:var(--brand-olive-press)}
+.c2-name{margin:0;font-family:var(--font-display);font-size:24px;line-height:1.25;color:var(--fg1);overflow-wrap:anywhere}
+.c2-watermark{position:absolute;right:14px;bottom:-26px;width:136px;height:136px;fill:none;stroke:var(--brand-olive);stroke-width:.9;stroke-linecap:round;stroke-linejoin:round;opacity:.13;pointer-events:none}
+.c2-lead.c2-is-tba{background:var(--paper-2);border:1px dashed var(--border-strong);box-shadow:none}
+.c2-lead.c2-is-tba .c2-photo{border-width:1.5px;box-shadow:none}
+.c2-lead.c2-is-tba .c2-role{color:var(--fg3)}
+.c2-lead.c2-is-tba .c2-name{font-family:var(--font-body);font-size:19px;font-style:italic;color:var(--fg3)}
+.c2-lead.c2-is-tba .c2-watermark{stroke:var(--fg3);opacity:.08}
+
+/* Members */
+.c2-members-title{display:flex;align-items:center;gap:14px;margin:0 0 14px;font-family:var(--font-body);font-size:12.5px;font-weight:700;letter-spacing:.2em;line-height:1.4;text-transform:uppercase;color:var(--fg2)}
+.c2-members-title::after{content:"";flex:1;height:1px;background:var(--border)}
+.c2-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:0;padding:0;list-style:none}
+.c2-member{display:flex;flex-direction:column;align-items:center;gap:2px;min-width:0;margin:0;padding:18px 10px 16px;text-align:center;background:var(--paper);border:1px solid var(--border);border-radius:var(--radius-card);transition:border-color 200ms var(--ease-out),box-shadow 240ms var(--ease-out)}
+.c2-member:not(.c2-is-tba):hover{border-color:var(--brand-sand);box-shadow:var(--shadow-lift)}
+.c2-member .c2-photo{width:62px;height:62px;margin-bottom:10px}
+.c2-member-role{font-size:11px;font-weight:700;letter-spacing:.18em;line-height:1.5;text-transform:uppercase;color:var(--brand-olive-press)}
+.c2-member-name{max-width:100%;font-size:15.5px;font-weight:700;line-height:1.35;color:var(--fg1);overflow-wrap:anywhere}
+.c2-member-unit{max-width:100%;font-size:13.5px;font-style:italic;line-height:1.4;color:var(--fg3);overflow-wrap:anywhere}
+.c2-member.c2-is-tba{background:var(--paper-2);border:1px dashed var(--border-strong)}
+.c2-member.c2-is-tba .c2-member-role{color:var(--fg3)}
+.c2-member.c2-is-tba .c2-member-name{font-size:14.5px;font-weight:400;font-style:italic;color:var(--fg3)}
+.c2-note{display:flex;align-items:center;gap:12px;margin:22px 0 0;font-size:14.5px;font-style:italic;line-height:1.5;color:var(--fg3)}
+.c2-note::before{content:"";flex:none;width:22px;height:1px;background:var(--brand-olive)}
+
+/* Panel width adaptations (container queries on .c2-body; the 2-column grid above is the fallback) */
+@container c2-panel (min-width:500px){
+  .c2-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+@container c2-panel (min-width:600px){
+  .c2-leads-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .c2-leads-2 .c2-lead{flex-direction:column;gap:14px;padding:26px 20px 24px;text-align:center}
+  .c2-leads-2 .c2-lead .c2-photo{width:96px;height:96px}
+  .c2-leads-2 .c2-name{font-size:22px}
+  .c2-leads-2 .c2-watermark{top:-26px;right:-26px;bottom:auto;width:120px;height:120px}
+}
+@container c2-panel (max-width:440px){
+  .c2-lead{flex-direction:column;gap:14px;padding:24px 18px 22px;text-align:center}
+  .c2-lead .c2-photo{width:92px;height:92px}
+  .c2-name{font-size:21px}
+  .c2-watermark{top:-26px;right:-30px;bottom:auto;width:120px;height:120px}
+}
+
+/* ---------- Tabs (881px and up; .c2-is-tabs is set by C2.js) ---------- */
+.c2-tablist[hidden]{display:none}
+.c2-explorer.c2-is-tabs{display:grid;grid-template-columns:minmax(0,330px) minmax(0,1fr);grid-template-rows:1fr auto;background:var(--paper);border:1px solid var(--border);border-top:3px solid var(--brand-olive);border-radius:var(--radius-card);box-shadow:var(--shadow-lift);overflow:hidden}
+.c2-is-tabs>.c2-tools,.c2-is-tabs>.c2-group{display:none}
+.c2-is-tabs .c2-tablist{grid-column:1;grid-row:1/span 2;display:flex;flex-direction:column;min-width:0;padding:8px 0 16px;background:var(--paper-2);border-right:1px solid var(--border)}
+.c2-tabgroup{display:flex;align-items:center;gap:10px;margin:0;padding:18px 22px 8px 22px;font-size:11.5px;font-weight:700;letter-spacing:.2em;line-height:1.4;text-transform:uppercase;color:var(--brand-olive-press)}
+.c2-tabgroup::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--border-strong),transparent)}
+.c2-tab{position:relative;display:flex;align-items:center;gap:14px;min-width:0;margin:0;padding:10px 20px 10px 19px;text-align:left;font:inherit;color:var(--fg2);background:none;border:0;border-left:3px solid transparent;cursor:pointer;transition:background-color 180ms var(--ease-out),color 180ms var(--ease-out)}
+.c2-tab .c2-medal{width:38px;height:38px}
+.c2-tab .c2-medal svg{width:19px;height:19px}
+.c2-tab-name{flex:1;min-width:0;font-size:15px;font-weight:700;line-height:1.3;overflow-wrap:anywhere}
+.c2-tab-count{flex:none;min-width:26px;padding:1px 8px;border:1px solid var(--border-strong);border-radius:999px;background:var(--paper);font-size:12px;font-weight:700;line-height:1.5;text-align:center;color:var(--fg2)}
+.c2-tab-count.c2-is-tba{border-style:dashed;font-size:10.5px;letter-spacing:.12em;line-height:1.75;color:var(--fg3)}
+.c2-tab:hover{color:var(--fg1);background:rgba(255,255,255,.7)}
+.c2-tab:hover .c2-medal{border-color:var(--brand-olive)}
+.c2-tab:focus-visible{outline:2px solid var(--brand-olive);outline-offset:-3px}
+.c2-tab[aria-selected="true"]{margin-right:-1px;color:var(--fg1);background:var(--paper);border-left-color:var(--brand-olive);box-shadow:0 -1px 0 var(--border),0 1px 0 var(--border);z-index:1}
+.c2-tab[aria-selected="true"] .c2-tab-count{border-color:var(--brand-sand);background:var(--brand-olive-soft);color:var(--brand-olive-press)}
+.c2-is-tabs .c2-item{grid-column:2;grid-row:1;align-self:start;min-width:0;margin:0;background:none;border:0;border-radius:0;box-shadow:none}
+.c2-is-tabs .c2-item:not(.c2-is-active){display:none}
+.c2-is-tabs .c2-summary{display:none}
+.c2-is-tabs .c2-body{padding:34px 40px 30px;border-top:0}
+
+/* Previous / next committee (built by C2.js, tabs mode only) */
+.c2-pager{grid-column:2;grid-row:2;display:flex;gap:16px;margin:0 40px;padding:16px 0 22px;border-top:1px solid var(--border)}
+.c2-pager[hidden],.c2-pager-btn[hidden]{display:none}
+.c2-pager-btn{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:10px;align-items:center;max-width:48%;margin:0;padding:8px 12px;text-align:left;font:inherit;color:var(--fg1);background:none;border:1px solid transparent;border-radius:var(--radius-btn);cursor:pointer;transition:border-color 160ms var(--ease-out),background-color 160ms var(--ease-out)}
+.c2-pager-next{margin-left:auto;grid-template-columns:minmax(0,1fr) auto;text-align:right}
+.c2-pager-arrow{grid-row:1/span 2;font-size:18px;line-height:1;color:var(--brand-olive);transition:transform 200ms var(--ease-out)}
+.c2-pager-next .c2-pager-arrow{grid-column:2}
+.c2-pager-dir{font-size:11px;font-weight:700;letter-spacing:.18em;line-height:1.5;text-transform:uppercase;color:var(--fg3)}
+.c2-pager-name{font-size:14.5px;font-weight:700;line-height:1.35;overflow-wrap:anywhere}
+.c2-pager-btn:hover{border-color:var(--border);background:var(--paper-2)}
+.c2-pager-btn:hover .c2-pager-name{color:var(--brand-olive-press)}
+.c2-pager-prev:hover .c2-pager-arrow{transform:translateX(-3px)}
+.c2-pager-next:hover .c2-pager-arrow{transform:translateX(3px)}
+.c2-pager-btn:focus-visible{outline:2px solid var(--focus-ring);outline-offset:2px}
+
+@media (max-width:1100px){
+  .c2-explorer.c2-is-tabs{grid-template-columns:minmax(0,300px) minmax(0,1fr)}
+  .c2-tab{gap:12px;padding:9px 14px 9px 15px}
+  .c2-tab .c2-medal{width:32px;height:32px}
+  .c2-tab .c2-medal svg{width:17px;height:17px}
+  .c2-tab-name{font-size:14.5px}
+  .c2-tabgroup{padding-left:18px;padding-right:18px}
+  .c2-is-tabs .c2-body{padding:28px 28px 26px}
+  .c2-pager{margin:0 28px}
+}
+
+/* ---------- Small screens (accordion) ---------- */
+@media (max-width:560px){
+  .c2-summary{gap:12px;padding:14px 14px}
+  .c2-medal{width:38px;height:38px}
+  .c2-medal svg{width:19px;height:19px}
+  .c2-sum-name{font-size:16.5px}
+  .c2-sum-meta{font-size:13.5px}
+  .c2-sum-role{display:block;margin-top:2px}
+  .c2-sum-role::after{display:none}
+  .c2-toggle{width:28px;height:28px}
+  .c2-body{padding:18px 14px 20px}
+  .c2-member{padding:16px 8px 14px}
+  .c2-member .c2-photo{width:54px;height:54px}
+}
+
+/* ---------- Motion ---------- */
+@keyframes c2-rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:no-preference){
+  .c2-is-tabs .c2-is-active .c2-body,
+  .c2-item[open]:not(.c2-is-active) .c2-body{animation:c2-rise 280ms var(--ease-out) both}
+}
+@media (prefers-reduced-motion:reduce){
+  .c2-item,.c2-medal,.c2-toggle,.c2-sum-name,.c2-tab,.c2-member,.c2-expand,.c2-pager-btn,.c2-pager-arrow{transition:none}
+}
+
+/* ---------- Print: show every committee as an open list ---------- */
+@media print{
+  .c2-explorer.c2-is-tabs{display:block;border:0;box-shadow:none}
+  .c2-tablist,.c2-tools,.c2-toggle,.c2-pager{display:none!important}
+  .c2-is-tabs .c2-summary{display:flex}
+  .c2-is-tabs .c2-item:not(.c2-is-active){display:block}
+  .c2-item{break-inside:avoid;box-shadow:none}
+}
