@@ -42,3 +42,90 @@
   window.addEventListener("scroll", function(){ if (!ticking) { ticking = true; window.requestAnimationFrame(update); } }, { passive: true });
   update();
 }();
+/* Conference tracks (conference pages): an accordion on phones and tablets.
+   From 881px wide the same markup becomes tabs: a track list on the left and
+   the selected track's topics on the right (see css/main.css). */
+!function(){
+  var box = document.querySelector("[data-tracks]");
+  if (!box) return;
+  var tracks = [].slice.call(box.querySelectorAll(".track"));
+  if (!tracks.length) return;
+  var current = 0, tabsOn = false;
+  var allOpen = function(){ return tracks.every(function(t){ return t.open; }); };
+
+  var expand = box.querySelector("[data-tracks-expand]");
+  var syncExpand = function(){ if (expand) expand.textContent = allOpen() ? "Collapse all" : "Expand all"; };
+  if (expand) {
+    expand.hidden = false;
+    expand.addEventListener("click", function(){ var open = !allOpen(); tracks.forEach(function(t){ t.open = open; }); syncExpand(); });
+  }
+
+  var list = document.createElement("div");
+  list.className = "tracks-tablist";
+  list.setAttribute("role", "tablist");
+  list.setAttribute("aria-orientation", "vertical");
+  list.setAttribute("aria-label", "Conference tracks");
+  list.hidden = true;
+  var tabs = tracks.map(function(t, i){
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "tracks-tab";
+    b.id = t.id + "-tab";
+    b.setAttribute("role", "tab");
+    b.setAttribute("aria-controls", t.id + "-topics");
+    b.innerHTML = '<span class="n"></span><span class="t"></span>';
+    b.querySelector(".n").textContent = t.querySelector(".track-num").textContent;
+    b.querySelector(".t").textContent = t.querySelector(".track-title").textContent;
+    b.addEventListener("click", function(){ select(i, false); });
+    list.appendChild(b);
+    t.querySelector(".track-topics").id = t.id + "-topics";
+    t.querySelector("summary").addEventListener("click", function(e){ if (tabsOn) e.preventDefault(); });
+    t.addEventListener("toggle", function(){ if (!tabsOn) syncExpand(); });
+    return b;
+  });
+  box.insertBefore(list, tracks[0]);
+
+  function select(i, focus){
+    current = i;
+    tracks.forEach(function(t, j){
+      var on = j === i;
+      t.classList.toggle("is-active", on);
+      tabs[j].setAttribute("aria-selected", on ? "true" : "false");
+      tabs[j].tabIndex = on ? 0 : -1;
+    });
+    tracks[i].open = true;
+    if (focus) tabs[i].focus();
+  }
+  list.addEventListener("keydown", function(e){
+    var k = e.key, n = tabs.length, i = current;
+    if (k === "ArrowDown" || k === "ArrowRight") i = (current + 1) % n;
+    else if (k === "ArrowUp" || k === "ArrowLeft") i = (current - 1 + n) % n;
+    else if (k === "Home") i = 0;
+    else if (k === "End") i = n - 1;
+    else return;
+    e.preventDefault();
+    select(i, true);
+  });
+
+  var mq = window.matchMedia("(min-width: 881px)");
+  var apply = function(){
+    tabsOn = mq.matches;
+    box.classList.toggle("is-tabs", tabsOn);
+    list.hidden = !tabsOn;
+    tracks.forEach(function(t, i){
+      var s = t.querySelector("summary"), ul = t.querySelector(".track-topics");
+      if (tabsOn) {
+        s.tabIndex = -1; s.setAttribute("aria-hidden", "true");
+        ul.setAttribute("role", "tabpanel"); ul.setAttribute("aria-labelledby", tabs[i].id);
+      } else {
+        s.removeAttribute("tabindex"); s.removeAttribute("aria-hidden");
+        ul.removeAttribute("role"); ul.removeAttribute("aria-labelledby");
+        t.classList.remove("is-active");
+      }
+    });
+    if (tabsOn) select(current, false);
+    else syncExpand();
+  };
+  if (mq.addEventListener) mq.addEventListener("change", apply); else mq.addListener(apply);
+  apply();
+}();
