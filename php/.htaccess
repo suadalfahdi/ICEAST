@@ -1,0 +1,20 @@
+# Reviewer application endpoint (php/reviewer-apply.php).
+# Allow CV uploads up to 5 MB (PHP's default limit is 2 MB).
+# These lines apply when PHP runs as an Apache module; for PHP-FPM / CGI
+# the same limits are in php/.user.ini.
+<IfModule mod_php.c>
+  php_value upload_max_filesize 6M
+  php_value post_max_size 8M
+</IfModule>
+<IfModule mod_php7.c>
+  php_value upload_max_filesize 6M
+  php_value post_max_size 8M
+</IfModule>
+
+# Only the endpoint itself may be requested in this folder.
+<FilesMatch "\.php$">
+  Require all denied
+</FilesMatch>
+<Files "reviewer-apply.php">
+  Require all granted
+</Files>
