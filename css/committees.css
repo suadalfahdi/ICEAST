@@ -53,14 +53,7 @@
   background:linear-gradient(var(--brand-olive) 0 3px,transparent 3px 6px,var(--brand-olive) 6px 7px) top/100% 7px no-repeat,
              linear-gradient(180deg,var(--paper-2),var(--paper) 70%);
 }
-/* ICEAST Chair: site accent band, gold frame, soft gold wash */
-.o1-card--chair{
-  --o1-dot:var(--brand-olive);
-  border-color:var(--brand-olive);
-  background:linear-gradient(90deg,var(--brand-red) 0 33.34%,var(--brand-cyan) 33.34% 66.67%,var(--brand-navy) 66.67%) top/100% 3px no-repeat,
-             linear-gradient(180deg,var(--brand-olive-soft),var(--paper) 72%);
-  box-shadow:var(--shadow-lift);
-}
+/* ICEAST Chair uses the same card treatment as the other committee leaders. */
 
 /* Photo frame: a real <img> later replaces the svg inside this span */
 .o1-photo{
@@ -129,7 +122,7 @@
   .o1-card::before,.o1-card::after{content:none}
   .o1-card--chief{--o1-ph:116px;max-width:288px;padding-top:30px}
   .o1-card--patron{--o1-ph:104px;max-width:264px;padding-top:30px}
-  .o1-card--chair{--o1-ph:120px}
+  .o1-card--chair{--o1-ph:84px}
   .o1-photo{margin-bottom:18px}
   .o1-role{font-size:11px;letter-spacing:.13em}
   .o1-role::after{margin:8px auto 10px}
@@ -138,7 +131,7 @@
   .o1-row>.o1-node:not(.o1-node--chair)>.o1-card .o1-name:not(:has(.o1-rank))::before{content:"";display:block;height:calc(var(--o1-rank-h) + 7px)}
   .o1-name{font-size:18px}
   .o1-card--chief .o1-name,.o1-card--patron .o1-name{font-size:21px}
-  .o1-card--chair .o1-name{font-size:22px}
+  .o1-card--chair .o1-name{font-size:18px}
 
   /* vertical stems between levels */
   .o1-branch{--o1-stem:36px;position:relative;width:100%;padding-top:var(--o1-stem)}
